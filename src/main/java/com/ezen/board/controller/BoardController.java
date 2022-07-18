@@ -69,34 +69,4 @@ public class BoardController {
 
 		return "forward:getBoardList";
 	}
-
-	@GetMapping("/deleteBoard1")
-	public String deleteBoard1(Board board) {
-		boardService.deleteBoard(board);
-
-		return "forward:getBoardList";
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	@GetMapping("/deleteBoard1")
-	public String deleteBoard(Board board) {
-		boardService.deleteBoard(board);
-		
-		return "forward:getBoardList";
-	}
-	
-	
-	
-	
-	
-	
-	
 }
