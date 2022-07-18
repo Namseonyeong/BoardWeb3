@@ -19,54 +19,61 @@ import com.ezen.board.service.BoardService;
 public class BoardController {
 	@Autowired
 	private BoardService boardService;
-	
+
 	@RequestMapping("/getBoardList")
 	public String getBoardList(Model model, Search search) {
-		
+
 		if (search.getSearchCondition() == null)
 			search.setSearchCondition("TITLE");
 		if (search.getSearchKeyword() == null)
 			search.setSearchKeyword("");
-		
+
 		Page<Board> boardList = boardService.getBoardList(search);
-		
+
 		model.addAttribute("boardList", boardList);
 		return "board/getBoardList";
 	}
-	
+
 	@GetMapping("/getBoard")
 	public String getBoard(Board board, Model model) {
 		model.addAttribute("board", boardService.getBoard(board));
-		
+
 		return "board/getBoard";
 	}
-	
+
 	@GetMapping("/insertBoard")
 	public String insertBoardView() {
-		
+
 		return "board/insertBoard";
 	}
-	
+
 	@PostMapping("/insertBoard")
 	public String insertBoard(Board board,
-						@AuthenticationPrincipal SecurityUser principal) {
+			@AuthenticationPrincipal SecurityUser principal) {
 		board.setMember(principal.getMember());
 		boardService.insertBoard(board);
-		
+
 		return "redirect:getBoardList";
 	}
-	
+
 	@PostMapping("/updateBoard")
 	public String updateBoard(Board board) {
 		boardService.updateBoard(board);
-		
-		return "forward:getBoardList" ;
+
+		return "forward:getBoardList";
 	}
-	
+
 	@GetMapping("/deleteBoard")
 	public String deleteBoard(Board board) {
 		boardService.deleteBoard(board);
-		
+
+		return "forward:getBoardList";
+	}
+
+	@GetMapping("/deleteBoard1")
+	public String deleteBoard1(Board board) {
+		boardService.deleteBoard(board);
+
 		return "forward:getBoardList";
 	}
 }
